@@ -1,0 +1,32 @@
+{
+  "story": "marot",
+  "lookahead": 0,
+  "n_words": 1256,
+  "tolerance_words": 0,
+  "block_bootstrap": {
+    "block_len": 50,
+    "n_boot": 10000
+  },
+  "AUC": 0.9447779111644657,
+  "AUC_boot_mean": 0.9449681954310157,
+  "AUC_CI_95": [
+    0.8991017214383104,
+    0.9751179567033676
+  ],
+  "AUPRC": 0.42832203900613114,
+  "dprime_from_AUC": 2.257367335979716,
+  "dprime_parametric": 2.848952379139847,
+  "consensus_spearman_rho": 0.2988454462357699,
+  "peaks": {
+    "distance_words": 5,
+    "prominence": 6.63671875,
+    "height": -9.96875,
+    "hits": 44,
+    "misses": 5,
+    "false_alarms": 75,
+    "correct_rejections": 1132,
+    "H_rate": 0.89,
+    "FA_rate": 0.0625,
+    "dprime": 2.7606483697891235
+  }
+}
