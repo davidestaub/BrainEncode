@@ -22,6 +22,7 @@ import time
 # Resample to this sample rate. 16kHz is used by most models.
 #TODO: check for whisper large
 TARGET_SAMPLE_RATE = 16000
+SCRIPT_DIR = Path(__file__).resolve().parent
 
 def extract_speech_features(model: PreTrainedModel, model_config: dict, wav: torch.Tensor,
                             chunksz_sec: float, contextsz_sec: float,
@@ -251,7 +252,7 @@ if __name__ == "__main__":
     print(torch.device)
     # Load the configuration file
     config = configparser.ConfigParser()
-    config.read('encoding-model-scaling-laws/speech_feature_arguments.ini')
+    config.read(SCRIPT_DIR / 'speech_feature_arguments.ini')
 
     # Access the values
     stimulus_dir = Path(config['DEFAULT']['stimulus_dir'])
@@ -278,7 +279,7 @@ if __name__ == "__main__":
     print(f"Loaded config: {config['DEFAULT']}")
 
     # Load the model configuration
-    with open('encoding-model-scaling-laws/speech_model_configs.json', 'r') as f:
+    with open(SCRIPT_DIR / 'speech_model_configs.json', 'r') as f:
         model_config = json.load(f)[model_name]
     model_hf_path = model_config['huggingface_hub']
 

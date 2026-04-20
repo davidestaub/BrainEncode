@@ -169,28 +169,15 @@ else:
     k_fold = False
 
 cpus = os.getenv('SLURM_CPUS_PER_TASK')
-cpus = int(cpus)
+cpus = int(cpus) if cpus else max(1, os.cpu_count() or 1)
 print(f"using {cpus} cpus")
 
-config = configparser.ConfigParser()
-config.read('encoding-model-scaling-laws/robert_sessions_config.ini')
-
 stories_config = configparser.ConfigParser()
-stories_config.read('encoding-model-scaling-laws/stories.ini')
+stories_config.read(Path(__file__).resolve().parent / 'feature_creation' / 'stories.ini')
 
 # TODO move to config
 chunk_sz, context_sz = 100, 16100
 model = 'whisper-large'
-
-# Determine the current working directory
-current_dir = Path.cwd()
-
-# If the script is run locally (from within the encoding-model-scaling-laws directory)
-if current_dir.name == "encoding-model-scaling-laws":
-    base_dir = current_dir
-# If the script is run from one level above (as in the cluster setup)
-else:
-    base_dir = current_dir / "encoding-model-scaling-laws"
 
 # TODO: move to config
 huth = False
@@ -881,4 +868,3 @@ with open(f"{output_dir}/best_voxel_by_correlation_response_{test_stories[0]}.pk
 
 with open(f"{output_dir}/full_response_{test_stories[0]}.pkl", 'wb') as f:
     pickle.dump(response.T, f)
-

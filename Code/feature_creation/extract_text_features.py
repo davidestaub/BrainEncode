@@ -4,13 +4,19 @@
 Feature extraction for text using Hugging Face language models, aligned with the user's implementation.
 Includes optional “eventboundary_log_prob” extraction based on an event‐boundary prompt, computed over audio‐based chunks.
 """
+from pathlib import Path
+import sys
+
+CODE_DIR = Path(__file__).resolve().parents[1]
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(CODE_DIR) not in sys.path:
+    sys.path.insert(0, str(CODE_DIR))
+
 from tqdm import tqdm
 import uroman as ur
 import torchaudio
 import torchaudio.transforms as T
-import sys
 print(sys.executable, flush=True)
-from pathlib import Path
 import ridge_utils.textgrid as textgrid
 import numpy as np
 from ridge_utils.dsutils import make_word_ds
@@ -26,6 +32,9 @@ import pickle as pkl
 import argparse, time, configparser, re, string
 import matplotlib.pyplot as plt
 from difflib import SequenceMatcher
+
+DEFAULT_CONFIG_PATH = SCRIPT_DIR / "text_features_arguments.ini"
+DEFAULT_STORIES_PATH = SCRIPT_DIR / "stories.ini"
 
 # ─────────────────────────────────────────────────────────────
 # 2)  BOUNDARY DETECTION UTILS
@@ -831,10 +840,10 @@ if __name__ == "__main__":
         parser.add_argument('--stories', nargs='+', required=True,
                             help="List of stories to process")
         parser.add_argument('--config', type=str,
-                            default='text_features_arguments_local.ini',
+                            default=str(DEFAULT_CONFIG_PATH),
                             help="Path to the configuration file")
         parser.add_argument('--stories_config', type=str,
-                            default='stories.ini',
+                            default=str(DEFAULT_STORIES_PATH),
                             help="Path to the stories configuration file")
         parser.add_argument('--feature_types', type=str,
                             default='hidden_states',
@@ -854,10 +863,10 @@ if __name__ == "__main__":
         parser.add_argument('--stories', nargs='+', required=True,
                             help="List of stories to process")
         parser.add_argument('--config', type=str,
-                            default='encoding-model-scaling-laws/text_features_arguments.ini',
+                            default=str(DEFAULT_CONFIG_PATH),
                             help="Path to the configuration file")
         parser.add_argument('--stories_config', type=str,
-                            default='encoding-model-scaling-laws/stories.ini',
+                            default=str(DEFAULT_STORIES_PATH),
                             help="Path to the stories configuration file")
         parser.add_argument('--feature_types', type=str,
                             default='hidden_states',

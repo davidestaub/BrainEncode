@@ -1,0 +1,11 @@
+.DS_Store
+**/.DS_Store
+.idea/
+__pycache__/
+*.pyc
+*.pyo
+
+# Local data and generated outputs
+data/
+scratch/
+Code/post_processing/out/
